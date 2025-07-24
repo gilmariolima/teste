@@ -1,0 +1,22 @@
+.container-erro{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 10px;
+    min-height: calc(100vh - 180px);
+}
+
+.content-erro{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    
+    a{
+        text-decoration: underline;
+        color: #0047AB;
+    }
+}
