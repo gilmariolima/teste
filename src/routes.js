@@ -11,6 +11,10 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Erro from './components/Erro';
 import PrivateRoute from './components/PrivateRoute';
+import RoleRoute from './components/RoleRoute';
+import AdicionarItem from './pages/AdicionarItem';
+
+
 
 function RoutesApp() {
   const location = useLocation();
@@ -24,14 +28,25 @@ function RoutesApp() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/cadastro" element={<Cadastro />} />
-        <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
+        <Route path="/" element={<Home />} />
         <Route path="/sobre" element={<PrivateRoute><Sobre /></PrivateRoute>} />
         <Route path="/contato" element={<PrivateRoute><Contato /></PrivateRoute>} />
         <Route path="/achados" element={<PrivateRoute><Achei /></PrivateRoute>} />
         <Route path="/perdidos" element={<PrivateRoute><Perdi /></PrivateRoute>} />
         <Route path="/achados/item/:id" element={<PrivateRoute><Item /></PrivateRoute>} />
         <Route path="/perdidos/item/:id" element={<PrivateRoute><Item /></PrivateRoute>} />
+
+       <Route
+        path="/adicionar-item"
+        element={
+          <RoleRoute allowedRoles={["administrador", "guarda"]}>
+            <AdicionarItem />
+          </RoleRoute>
+        }
+      />
+
         <Route path="*" element={<Erro />} />
+     
       </Routes>
 
       {/* Só mostra o Footer se não estiver em login ou cadastro */}

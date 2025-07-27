@@ -1,18 +1,15 @@
-import "./header.css";
-import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
+import { Link } from "react-router-dom";
+import './header.css'
+
 
 function Header() {
-  const { usuario } = useAuth();
+  const { usuario, perfil } = useAuth();
 
   const handleLogout = async () => {
-    try {
-      await signOut(auth);
-    } catch (error) {
-      console.error("Erro ao sair:", error);
-    }
+    await signOut(auth);
   };
 
   return (
@@ -21,13 +18,14 @@ function Header() {
       <div className="pag">
         <Link to="/achados">Achados</Link>
         <Link to="/perdidos">Perdidos</Link>
+        {(perfil === "guarda" || perfil === "administrador") && (
+          <Link to="/adicionar-item">Adicionar Item</Link>
+        )}
       </div>
       <div className="nav">
         {usuario ? (
           <>
-            <span className="username">
-              Olá, {usuario.displayName || usuario.email}
-            </span>
+            <span className="username">Olá, {usuario.nome}</span>
             <button onClick={handleLogout} className="logout-btn">Sair</button>
           </>
         ) : (
@@ -40,5 +38,4 @@ function Header() {
     </header>
   );
 }
-
 export default Header;
