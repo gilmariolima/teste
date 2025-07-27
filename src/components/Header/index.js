@@ -6,7 +6,7 @@ import './header.css'
 
 
 function Header() {
-  const { usuario, perfil } = useAuth();
+  const { usuario, perfil, nome } = useAuth();
 
   const handleLogout = async () => {
     await signOut(auth);
@@ -25,7 +25,7 @@ function Header() {
       <div className="nav">
         {usuario ? (
           <>
-            <span className="username">Olá, {usuario.nome}</span>
+            <span className="username">Olá, {nome}</span>
             <button onClick={handleLogout} className="logout-btn">Sair</button>
           </>
         ) : (

@@ -1,8 +1,84 @@
-.container-item{
-    width: 100%;
-    min-height: calc(100vh - 80px);
-    background-color: #121212;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
+.container-item {
+  width: 100%;
+  min-height: calc(100vh - 80px);
+  background-color: #121212;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+
+  p{
+    margin-bottom: 5px;
+  }
+}
+
+.img-container-item {
+  width: 300px;
+  height: auto;
+  margin: 1rem 0;
+  border-radius: 10px;
+}
+
+.botoes-item {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.btn-editar,
+.btn-excluir {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-editar {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-excluir {
+  background-color: #dc3545;
+  color: white;
+}
+
+.form-editar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  max-width: 400px;
+}
+
+.form-editar input,
+.form-editar textarea {
+  width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #333;
+    border-radius: 4px;
+    font-size: 1rem;
+    background-color: #2c2c2c;
+    color: #e0e0e0;
+    box-sizing: border-box;
+}
+
+.btn-salvar, .btn-cancelar{
+  border: none;
+  padding: 10px;
+  color: #fafafa;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btn-cancelar{
+  background-color: #6d6d6d;
+}
+
+.btn-salvar{
+  background-color: darkgreen;
 }

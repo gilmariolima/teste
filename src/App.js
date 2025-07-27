@@ -1,6 +1,6 @@
-// src/App.js
+
 import RoutesApp from './routes';
-import './App.css'; // Crie ou use para estilo global
+import './App.css'; 
 
 function App() {
   return (

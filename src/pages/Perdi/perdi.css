@@ -13,6 +13,7 @@
     display: flex;
     align-items: center;
     flex-direction: column;
+    color: #fafafa;
 }
 
 
@@ -71,6 +72,8 @@
     font-size: 16px;
     font-weight: bold;
     border-radius: 0 0 8px 8px;
+    text-decoration: none;
+    color: #fafafa;
 }
 
 .link-item:hover{

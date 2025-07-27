@@ -1,3 +1,4 @@
+
 import { Routes, Route, useLocation } from 'react-router-dom';
 import Home from './pages/Home';
 import Sobre from './pages/Sobre';
@@ -14,15 +15,12 @@ import PrivateRoute from './components/PrivateRoute';
 import RoleRoute from './components/RoleRoute';
 import AdicionarItem from './pages/AdicionarItem';
 
-
-
 function RoutesApp() {
   const location = useLocation();
   const isAuthPage = location.pathname === '/login' || location.pathname === '/cadastro';
 
   return (
     <>
-      {/* Só mostra o Header se não estiver em login ou cadastro */}
       {!isAuthPage && <Header />}
 
       <Routes>
@@ -33,23 +31,17 @@ function RoutesApp() {
         <Route path="/contato" element={<PrivateRoute><Contato /></PrivateRoute>} />
         <Route path="/achados" element={<PrivateRoute><Achei /></PrivateRoute>} />
         <Route path="/perdidos" element={<PrivateRoute><Perdi /></PrivateRoute>} />
-        <Route path="/achados/item/:id" element={<PrivateRoute><Item /></PrivateRoute>} />
-        <Route path="/perdidos/item/:id" element={<PrivateRoute><Item /></PrivateRoute>} />
+        <Route path="/item/:id" element={<PrivateRoute><Item /></PrivateRoute>} />
 
-       <Route
-        path="/adicionar-item"
-        element={
+        <Route path="/adicionar-item" element={
           <RoleRoute allowedRoles={["administrador", "guarda"]}>
             <AdicionarItem />
           </RoleRoute>
-        }
-      />
+        } />
 
         <Route path="*" element={<Erro />} />
-     
       </Routes>
 
-      {/* Só mostra o Footer se não estiver em login ou cadastro */}
       {!isAuthPage && <Footer />}
     </>
   );

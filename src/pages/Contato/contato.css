@@ -1,8 +1,77 @@
-.container-contato{
-    width: 100%;
-    min-height: calc(100vh - 60px);
-    background-color: #121212;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
+.container-contato {
+  width: 100%;
+  min-height: calc(100vh - 180px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 2rem;
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+.container-contato h1 {
+  font-size: 2.5rem;
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+  font-family: 'Arial', sans-serif;
+}
+
+.container-contato form {
+  background: #1e1e1e;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 500px;
+  border: 1px solid #333;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 1rem;
+  color: #1877f2;
+  margin-bottom: 0.5rem;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #333;
+  border-radius: 4px;
+  font-size: 1rem;
+  background-color: #2c2c2c;
+  color: #e0e0e0;
+  box-sizing: border-box;
+  resize: none;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #1877f2;
+}
+
+.container-contato button {
+  width: 100%;
+  padding: 0.75rem;
+  background: linear-gradient(90deg, #1877f2, #6200ff);
+  color: #fafafa;
+  border: none;
+  border-radius: 4px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.container-contato button:hover {
+  background: linear-gradient(90deg, #6200ff, #1877f2);
 }

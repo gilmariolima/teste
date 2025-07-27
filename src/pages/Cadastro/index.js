@@ -5,6 +5,7 @@ import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 import './cadastro.css';
+import { Link } from "react-router-dom";
 
 function Cadastro() {
   const [nome, setNome] = useState("");
@@ -16,16 +17,25 @@ function Cadastro() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const cred = await createUserWithEmailAndPassword(auth, email, senha);
-    const uid = cred.user.uid;
+    try {
+      const cred = await createUserWithEmailAndPassword(auth, email, senha);
+      const uid = cred.user.uid;
 
-    await setDoc(doc(db, "usuarios", uid), {
-      nome,
-      email,
-      perfil,
-    });
+      await setDoc(doc(db, "usuarios", uid), {
+        nome,
+        email,
+        perfil,
+      });
 
-    navigate("/");
+      navigate("/");
+    } catch (error) {
+      if (error.code === "auth/email-already-in-use") {
+        alert("Este e-mail já está cadastrado. Tente fazer login.");
+      } else {
+        console.error("Erro ao cadastrar:", error);
+        alert("Erro ao cadastrar. Tente novamente.");
+      }
+    }
   };
 
   return (
@@ -65,6 +75,7 @@ function Cadastro() {
 
         <button type="submit">Cadastrar</button>
       </form>
+      <p><Link to="/login">Já tem uma conta?</Link></p>
     </div>
   );
 }
