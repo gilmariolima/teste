@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { doc, getDoc, deleteDoc, updateDoc } from "firebase/firestore";
 import { ref, deleteObject, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -34,7 +34,7 @@ function Item() {
             data: data.data || "",
           });
         } else {
-          console.warn("Item não encontrado");
+         navigate ("/erro")
         }
       } catch (err) {
         console.error("Erro ao buscar item:", err);
@@ -59,7 +59,7 @@ function Item() {
       }
 
       alert("Item excluído com sucesso");
-      navigate("/achados"); // ou "/perdidos" dependendo de onde está vindo
+      navigate("/"); // ou "/perdidos" dependendo de onde está vindo
     } catch (err) {
       console.error("Erro ao excluir item:", err);
       alert("Erro ao excluir item");
