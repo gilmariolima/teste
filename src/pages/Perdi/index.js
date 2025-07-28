@@ -48,6 +48,7 @@ function Perdi() {
                     src={item.imagem}
                     alt={item.nome}
                     className="home-item-image"
+                    loading="lazy"
                   />
                 )}
                 <h3 className="home-item-title">{item.nome}</h3>
