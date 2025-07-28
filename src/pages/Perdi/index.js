@@ -26,22 +26,42 @@ function Perdi() {
   }, []);
 
   return (
-    <div className="container-perdi">
-      <h2 className="titulo-container">Lista de Perdidos</h2>
+    <div className="home">
+      <div className="home-hero">
+        <h1 className="home-hero-title">Itens Perdidos</h1>
+        <p className="home-hero-subtitle">
+          Se você viu algum desses itens, por favor entre em contato e ajude quem perdeu!
+        </p>
+      </div>
 
-      <ul className="lista-itens perdidos">
-        {perdidos.length === 0 && <p>Nenhum item perdido encontrado.</p>}
+      <div className="home-recent-section">
+        <h2 className="home-recent-title">Lista de Perdidos</h2>
 
-        {perdidos.map(item => (
-          <li className="item" key={item.id}>
-            <h2 className="titulo-item">{item.nome}</h2>
-            {item.imagem && (
-              <img className="img-item" src={item.imagem} alt={item.nome} />
-            )}
-            <Link className="link-item" to={`/item/${item.id}`}>Detalhes</Link>
-          </li>
-        ))}
-      </ul>
+        {perdidos.length === 0 ? (
+          <p style={{ textAlign: "center", color: "#ccc" }}>Nenhum item perdido encontrado.</p>
+        ) : (
+          <ul className="home-items-list">
+            {perdidos.map(item => (
+              <li className="home-item-card" key={item.id}>
+                {item.imagem && (
+                  <img
+                    src={item.imagem}
+                    alt={item.nome}
+                    className="home-item-image"
+                  />
+                )}
+                <h3 className="home-item-title">{item.nome}</h3>
+                <p className="home-item-description">
+                  {item.descricao?.slice(0, 80) || "Sem descrição."}
+                </p>
+                <Link to={`/item/${item.id}`} className="home-item-link">
+                  Ver detalhes
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </div>
   );
 }

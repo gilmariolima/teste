@@ -1,7 +1,11 @@
-import { useParams, useNavigate, Navigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { doc, getDoc, deleteDoc, updateDoc } from "firebase/firestore";
-import { ref, deleteObject, uploadBytes, getDownloadURL } from "firebase/storage";
+import {
+  doc, getDoc, deleteDoc, updateDoc
+} from "firebase/firestore";
+import {
+  ref, deleteObject, uploadBytes, getDownloadURL
+} from "firebase/storage";
 import { db, storage } from "../../firebase";
 import { useAuth } from "../../contexts/AuthContext";
 import "./item.css";
@@ -34,7 +38,7 @@ function Item() {
             data: data.data || "",
           });
         } else {
-         navigate ("/erro")
+          navigate("/erro");
         }
       } catch (err) {
         console.error("Erro ao buscar item:", err);
@@ -47,19 +51,16 @@ function Item() {
   }, [id]);
 
   async function handleExcluir() {
-    const confirmar = window.confirm("Tem certeza que deseja excluir este item?");
-    if (!confirmar) return;
+    if (!window.confirm("Tem certeza que deseja excluir este item?")) return;
 
     try {
       await deleteDoc(doc(db, "itens", id));
-
       if (item?.imagem) {
         const imagemRef = ref(storage, item.imagem);
         await deleteObject(imagemRef);
       }
-
       alert("Item excluído com sucesso");
-      navigate("/"); // ou "/perdidos" dependendo de onde está vindo
+      navigate("/");
     } catch (err) {
       console.error("Erro ao excluir item:", err);
       alert("Erro ao excluir item");
@@ -71,7 +72,6 @@ function Item() {
       let urlImagem = item.imagem;
 
       if (novaImagem) {
-        // Apaga imagem antiga
         if (item?.imagem) {
           const refAntiga = ref(storage, item.imagem);
           await deleteObject(refAntiga);
@@ -89,11 +89,12 @@ function Item() {
         imagem: urlImagem,
       });
 
-      setItem((prev) => ({
+      setItem(prev => ({
         ...prev,
         ...formData,
         imagem: urlImagem,
       }));
+
       setNovaImagem(null);
       setEditando(false);
       alert("Item atualizado com sucesso");
@@ -103,54 +104,63 @@ function Item() {
     }
   }
 
-  if (carregando) return <p>Carregando...</p>;
-  if (!item) return <p>Item não encontrado.</p>;
+  if (carregando) return <p className="loading-text">Carregando...</p>;
+  if (!item) return <p className="error-text">Item não encontrado.</p>;
 
   return (
     <div className="container-item">
-      {editando ? (
-        <div className="form-editar">
-          <input
-            type="text"
-            value={formData.nome}
-            onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
-            placeholder="Nome"
-          />
-          <textarea
-            value={formData.descricao}
-            onChange={(e) => setFormData({ ...formData, descricao: e.target.value })}
-            placeholder="Descrição"
-          />
-          <input
-            type="date"
-            value={formData.data}
-            onChange={(e) => setFormData({ ...formData, data: e.target.value })}
-          />
-          <input
-            type="file"
-            onChange={(e) => setNovaImagem(e.target.files[0])}
-          />
-          <button className="btn-salvar" onClick={handleSalvarEdicao}>Salvar</button>
-          <button className="btn-cancelar" onClick={() => setEditando(false)}>Cancelar</button>
-        </div>
-      ) : (
-        <>
-          <h1>{item.nome}</h1>
-          {item.imagem && (
-            <img className="img-container-item" src={item.imagem} alt={item.nome} />
-          )}
-          <p><strong>Descrição:</strong> {item.descricao}</p>
-          <p><strong>Data:</strong> {item.data}</p>
-          <p><strong>Tipo:</strong> {item["achado-perdido"]}</p>
+      <div className="card-item">
+        {editando ? (
+          <div className="form-editar">
+            <input
+              type="text"
+              value={formData.nome}
+              onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
+              placeholder="Nome"
+            />
+            <textarea
+              value={formData.descricao}
+              onChange={(e) => setFormData({ ...formData, descricao: e.target.value })}
+              placeholder="Descrição"
+            />
+            <input
+              type="date"
+              value={formData.data}
+              onChange={(e) => setFormData({ ...formData, data: e.target.value })}
+            />
+            <input
+              type="file"
+              onChange={(e) => setNovaImagem(e.target.files[0])}
+            />
+            <button className="btn-salvar" onClick={handleSalvarEdicao}>Salvar</button>
+            <button className="btn-cancelar" onClick={() => setEditando(false)}>Cancelar</button>
+          </div>
+        ) : (
+          <>
+            <h1 className="item-title">{item.nome}</h1>
 
-          {podeEditar && (
-            <div className="botoes-item">
-              <button className="btn-editar" onClick={() => setEditando(true)}>Editar</button>
-              <button className="btn-excluir" onClick={handleExcluir}>Excluir</button>
-            </div>
-          )}
-        </>
-      )}
+            {item["achado-perdido"] && (
+              <span className={`tag ${item["achado-perdido"] === "achado" ? "achado" : "perdido"}`}>
+                {item["achado-perdido"]}
+              </span>
+            )}
+
+            {item.imagem && (
+              <img src={item.imagem} alt={item.nome} className="img-container-item" />
+            )}
+
+            <p><strong>Descrição:</strong> {item.descricao}</p>
+            <p><strong>Data:</strong> {item.data}</p>
+
+            {podeEditar && (
+              <div className="botoes-item">
+                <button className="btn-editar" onClick={() => setEditando(true)}>Editar</button>
+                <button className="btn-excluir" onClick={handleExcluir}>Excluir</button>
+              </div>
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 }

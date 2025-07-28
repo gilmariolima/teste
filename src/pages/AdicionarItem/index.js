@@ -2,8 +2,9 @@ import { useState } from "react";
 import { db, storage } from "../../firebase";
 import { collection, addDoc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import "./add.css";
 import { useNavigate } from "react-router-dom";
+import { serverTimestamp } from "firebase/firestore";
+import "./add.css";
 
 function AdicionarItem() {
   const [nome, setNome] = useState("");
@@ -11,7 +12,48 @@ function AdicionarItem() {
   const [data, setData] = useState("");
   const [tipo, setTipo] = useState("achado");
   const [imagem, setImagem] = useState(null);
+  
   const navigate = useNavigate();
+
+  // Função para compactar a imagem
+  const compressImage = (file, maxWidth = 800, quality = 0.7) =>
+  new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    reader.onload = (event) => {
+      const img = new Image();
+      img.src = event.target.result;
+
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+
+        let width = img.width;
+        let height = img.height;
+
+        // Redimensiona proporcionalmente se a largura for maior que o limite
+        if (width > maxWidth) {
+          const scaleFactor = maxWidth / width;
+          width = maxWidth;
+          height = height * scaleFactor;
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, width, height);
+
+        canvas.toBlob(
+          (blob) => {
+            resolve(blob);
+          },
+          "image/jpeg",
+          quality
+        );
+      };
+    };
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,20 +61,22 @@ function AdicionarItem() {
     try {
       let imageUrl = "";
 
-      // Se o usuário selecionou uma imagem, envia para o Storage
+      // Se houver imagem, compacta e envia
       if (imagem) {
+        const imagemCompactada = await compressImage(imagem);
         const imageRef = ref(storage, `itens/${Date.now()}-${imagem.name}`);
-        const snapshot = await uploadBytes(imageRef, imagem);
+        const snapshot = await uploadBytes(imageRef, imagemCompactada);
         imageUrl = await getDownloadURL(snapshot.ref);
       }
 
-      // Salva os dados no Firestore (com ou sem imagem)
+      // Salva os dados no Firestore
       await addDoc(collection(db, "itens"), {
         nome,
         descricao,
         data,
         "achado-perdido": tipo,
         imagem: imageUrl || null,
+        criadoEm: serverTimestamp(), // <- adiciona esta linha
       });
 
       alert("Item cadastrado com sucesso!");
@@ -44,7 +88,7 @@ function AdicionarItem() {
   };
 
   return (
-    <div className="cadastro-container add">
+    <div className="add-container">
       <h1>Adicionar Item</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-group">

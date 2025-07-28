@@ -26,21 +26,40 @@ function Achei() {
   }, []);
 
   return (
-    <div className="container-achei">
-      <h2 className="titulo-container">Lista de Achados</h2>
-      <ul className="lista-itens achados">
-        {achados.length === 0 && <p>Nenhum item achado encontrado.</p>}
+    <div className="home">
+      <div className="home-hero">
+        <h1 className="home-hero-title">Itens Achados</h1>
+        <p className="home-hero-subtitle">Veja os objetos encontrados recentemente e ajude a devolvê-los ao dono.</p>
+      </div>
 
-        {achados.map(item => (
-          <li className="item" key={item.id}>
-            <h2 className="titulo-item">{item.nome}</h2>
-            {item.imagem && (
-              <img className="img-item" src={item.imagem} alt={item.nome} />
-            )}
-            <Link className="link-item" to={`/item/${item.id}`}>Detalhes</Link>
-          </li>
-        ))}
-      </ul>
+      <div className="home-recent-section">
+        <h2 className="home-recent-title">Lista de Achados</h2>
+
+        {achados.length === 0 ? (
+          <p style={{ textAlign: "center", color: "#ccc" }}>Nenhum item achado encontrado.</p>
+        ) : (
+          <ul className="home-items-list">
+            {achados.map(item => (
+              <li className="home-item-card" key={item.id}>
+                {item.imagem && (
+                  <img
+                    src={item.imagem}
+                    alt={item.nome}
+                    className="home-item-image"
+                  />
+                )}
+                <h3 className="home-item-title">{item.nome}</h3>
+                <p className="home-item-description">
+                  {item.descricao?.slice(0, 80) || "Sem descrição."}
+                </p>
+                <Link to={`/item/${item.id}`} className="home-item-link">
+                  Ver detalhes
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </div>
   );
 }
