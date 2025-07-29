@@ -26,7 +26,6 @@
     width: 100%;
     max-width: 400px;
     border: 1px solid #333;
-    gap: 20px;
   }
 
   .form-group {
@@ -37,7 +36,7 @@
     display: block;
     font-size: 1rem;
     color: #1877f2;
-    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
   }
 
   .form-group input {
@@ -67,6 +66,7 @@
     font-weight: bold;
     cursor: pointer;
     transition: background 0.3s ease;
+    margin-top: 1rem;
   }
 
   .login-container button:hover {

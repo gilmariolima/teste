@@ -29,6 +29,7 @@ function Login() {
       <h1>Login</h1>
       {erro && <p className="erro">{erro}</p>}
       <form className="form-group" onSubmit={handleLogin}>
+        <label htmlFor="email">Email</label>
         <input
           type="email"
           placeholder="E-mail"
@@ -36,6 +37,7 @@ function Login() {
           onChange={(e) => setEmail(e.target.value)}
           required
         />
+        <label htmlFor="senha">Senha</label>
         <input
           type="password"
           placeholder="Senha"
