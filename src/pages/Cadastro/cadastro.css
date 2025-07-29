@@ -89,3 +89,13 @@
   .cadastro-container a:hover {
     text-decoration: underline;
   }
+
+.toggle-senha {
+  position: absolute;
+  right: 188px;
+  top: 391px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #333;
+  font-size: 1.1rem;
+}
