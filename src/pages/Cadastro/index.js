@@ -83,16 +83,17 @@ function Cadastro() {
               placeholder="Senha"
               type={mostrarSenha ? "text" : "password"}
               required
-              <span
-              className="toggle-senha"
-              onClick={() => setMostrarSenha(!mostrarSenha)}
-              title={mostrarSenha ? "Ocultar senha" : "Mostrar senha"}
-            >
-              {mostrarSenha ? <FaEyeSlash /> : <FaEye />}
-            </span>
-            />
+              
           </div>
         </div>
+          <span
+        className="toggle-senha"
+        onClick={() => setMostrarSenha(!mostrarSenha)}
+        title={mostrarSenha ? "Ocultar senha" : "Mostrar senha"}
+      >
+        {mostrarSenha ? <FaEyeSlash /> : <FaEye />}
+      </span>
+      />
 
         <button type="submit">Cadastrar</button>
       </form>
