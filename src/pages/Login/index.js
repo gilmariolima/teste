@@ -4,11 +4,14 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
 import { Link } from "react-router-dom";
 import "./login.css";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [erro, setErro] = useState("");
+  const [mostrarSenha, setMostrarSenha] = useState(false);
+  
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -38,13 +41,23 @@ function Login() {
           required
         />
         <label htmlFor="senha">Senha</label>
-        <input
-          type="password"
-          placeholder="Senha"
-          value={senha}
-          onChange={(e) => setSenha(e.target.value)}
-          required
-        />
+        <div className="senha-wrapper">
+          <input
+            id="senha"
+            value={senha}
+            onChange={e => setSenha(e.target.value)}
+            placeholder="Senha"
+            type={mostrarSenha ? "text" : "password"}
+            required
+          />
+          <span
+            className="toggle-senha"
+            onClick={() => setMostrarSenha(!mostrarSenha)}
+            title={mostrarSenha ? "Ocultar senha" : "Mostrar senha"}
+          >
+            {mostrarSenha ? <FaEyeSlash /> : <FaEye />}
+          </span>
+        </div>
         <button className="btn-entrar" type="submit">Entrar</button>
       </form>
       <p>Não tem uma conta? <Link to="/cadastro">Cadastre-se</Link></p>
