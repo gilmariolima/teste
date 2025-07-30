@@ -27,11 +27,11 @@ function RoutesApp() {
         <Route path="/login" element={<Login />} />
         <Route path="/cadastro" element={<Cadastro />} />
         <Route path="/" element={<Home />} />
-        <Route path="/sobre" element={<PrivateRoute><Sobre /></PrivateRoute>} />
-        <Route path="/contato" element={<PrivateRoute><Contato /></PrivateRoute>} />
-        <Route path="/achados" element={<PrivateRoute><Achei /></PrivateRoute>} />
-        <Route path="/perdidos" element={<PrivateRoute><Perdi /></PrivateRoute>} />
-        <Route path="/item/:id" element={<PrivateRoute><Item /></PrivateRoute>} />
+        <Route path="/sobre" element={<Sobre />} />
+        <Route path="/contato" element={<Contato />} />
+        <Route path="/achados" element={<Achei />} />
+        <Route path="/perdidos" element={<Perdi />} />
+        <Route path="/item/:id" element={<Item />} />
 
         <Route path="/adicionar-item" element={
           <RoleRoute allowedRoles={["administrador", "guarda"]}>

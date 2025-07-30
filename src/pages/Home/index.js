@@ -15,7 +15,7 @@ function Home() {
         const q = query(
           collection(db, "itens"),
           orderBy("data", "desc"),
-          limit(5)
+          limit(4)
         );
         const snapshot = await getDocs(q);
         const itens = snapshot.docs.map(doc => ({
@@ -55,7 +55,7 @@ function Home() {
         </ul>
       </section>
 
-      {usuario && (
+      
         <div className="home-recent-section">
           <h2 className="home-recent-title">Itens recentes cadastrados</h2>
 
@@ -87,7 +87,7 @@ function Home() {
             </ul>
           )}
         </div>
-      )}
+    
     </div>
   );
 }

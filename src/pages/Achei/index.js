@@ -16,6 +16,7 @@ function Achei() {
           id: doc.id,
           ...doc.data()
         }));
+         console.log("Itens achados:", itens); // <-- ADICIONE AQUI
         setAchados(itens);
       } catch (err) {
         console.error("Erro ao buscar itens:", err);
